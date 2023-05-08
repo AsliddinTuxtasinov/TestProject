@@ -1,8 +1,17 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from .models import Role
 
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ['id', 'first_name', 'last_name']
+
+
 class HistoricalRoleSerializer(serializers.ModelSerializer):
+    history_user = UserSerializer()
+
     class Meta:
         model = Role.history.model
         fields = '__all__'
